@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController1 : MonoBehaviour
 {
     [Header("Base Speed Values")]
     public float maximumSpeed;
@@ -13,15 +13,18 @@ public class PlayerMovementController : MonoBehaviour
     public AnimationCurve accelerationCurve;
     public AnimationCurve decelerationCurve;
     public float accelerationDuration;
-    public float decelerationDuration;
+    public float brakeDuration;
 
+    //The speed of the character is name targetSpeed instead, very odd. Is it bcz movement calculation doesnt work linearly?
     private float targetSpeed;
     private float speedChangeTimer = 0;
     private float lastVelocitybeforeDeceleration = 0;
 
+    //A variable of the Component.
     private CharacterController controller;
+    //Reference to the player position.
     private Transform playerBody;
-
+    //private new Ga
     private Vector3 movementVector;
     private Vector3 lastMaxMovementVector;
 
@@ -31,7 +34,6 @@ public class PlayerMovementController : MonoBehaviour
     [HideInInspector]
     public bool isInputEnabled;
     private bool isDecelerating = false;
-    public bool controllerConnected = false;
 
 
     //@INIT
@@ -45,14 +47,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        //Checks if a controller is connected.
-        if (Input.GetJoystickNames().Length >= 0)
-        {
-            controllerConnected = false;
-            LookAtMouse();
-        }
-
-
         float dt = Time.deltaTime; //It's used quite a lot in this function so I am storing it locally for a light optimization
 
         controller.Move(new Vector3(0, -gravityValue * dt, 0)); //gravity: the character constantly moves downwards, the CharacterController component handles collision
@@ -83,7 +77,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         else
         {
-            //Deceleration
+            //Checks if the player has stopped moving the stick - Deceleration
             if(speedChangeTimer > 0)
             {
                 //This happens only once per deceleration at the first frame
@@ -93,13 +87,13 @@ public class PlayerMovementController : MonoBehaviour
                     lastVelocitybeforeDeceleration = movementVector.magnitude;
                 }
 
-                if (speedChangeTimer > decelerationDuration)
-                    speedChangeTimer = decelerationDuration; //Clamping the time value to the deceleration
+                if (speedChangeTimer > brakeDuration)
+                    speedChangeTimer = brakeDuration; //Clamping the time value to the deceleration
 
                 float ratio = lastVelocitybeforeDeceleration < maximumSpeed ? lastVelocitybeforeDeceleration / maximumSpeed : 1; //Ternary operator, useful to avoid small if/else statements
 
                 speedChangeTimer -= dt;
-                progression = Mathf.Clamp(speedChangeTimer / decelerationDuration, 0, 1);
+                progression = Mathf.Clamp(speedChangeTimer / brakeDuration, 0, 1);
                 movementVector = Vector3.Lerp(Vector3.zero, lastMaxMovementVector * ratio, progression);
             }
         }
@@ -117,19 +111,13 @@ public class PlayerMovementController : MonoBehaviour
     //@INPUT: Handle transform rotation
     private void OnLook(InputValue lookValue)
     {
-
         rightStickPosition = lookValue.Get<Vector2>();
 
-        if (rightStickPosition != Vector2.zero)
+        if(rightStickPosition != Vector2.zero)
         {
             float angle = Mathf.Atan2(rightStickPosition.x, rightStickPosition.y) * Mathf.Rad2Deg;
             playerBody.rotation = Quaternion.Euler(0, angle - 90, 0);
         }
     }
-    private void LookAtMouse()
-    {
-
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.forward = mousePos - new Vector2(transform.position.x, transform.position.y);
-    }
 }
+
