@@ -35,6 +35,14 @@ public class CameraBehaviour : MonoBehaviour
         initialCameraOffset = transform.position - player.transform.position;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+           StartCoroutine(Shake(10f, 0.4f));
+        }
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -55,6 +63,7 @@ public class CameraBehaviour : MonoBehaviour
             default:
                 break;
         }
+
     }
 
     private void UpdateOnGameplay()
@@ -88,6 +97,23 @@ public class CameraBehaviour : MonoBehaviour
             adjustedDamping *= dampingScreenEdgeDistance.Evaluate(1 - ((1-playerRelativeScreenPosition.y) / screenEdgeForFollow.y));
             transform.position += Vector3.forward * Time.deltaTime * adjustedDamping;
         }
+
+    }
+
+    public IEnumerator Shake(float duration, float magnitude)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.position = new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
+            yield return 0;
+        }
+        transform.position = initialCameraOffset;
     }
 
     private void UpdateOnScriptedCinematic()
