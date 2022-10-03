@@ -32,6 +32,9 @@ public class PlayerMovementController : MonoBehaviour
     public bool isInputEnabled;
     private bool isDecelerating = false;
 
+    [SerializeField] private int dashSpeed;
+    [SerializeField] private float dashTime;
+
 
     //@INIT
     void Start()
@@ -47,7 +50,10 @@ public class PlayerMovementController : MonoBehaviour
         float dt = Time.deltaTime; //It's used quite a lot in this function so I am storing it locally for a light optimization
 
         controller.Move(new Vector3(0, -gravityValue * dt, 0)); //gravity: the character constantly moves downwards, the CharacterController component handles collision
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            controller.Move(new Vector3(0, -gravityValue * dt, 0) * 100);
+        }
         float progression = 0;
 
         //What happens when the stick is pressed in a direction
@@ -97,12 +103,29 @@ public class PlayerMovementController : MonoBehaviour
 
         //All the previous code only serves to calculate the movementVector, and we apply the movement to the controller at the very end of the Update
         controller.Move(movementVector * dt);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(DashCoroutine(movementVector));
+        }
+    }
+
+    private IEnumerator DashCoroutine(Vector3 direction)
+    {
+        float startTime = Time.time;
+        while(Time.time < startTime + dashTime)
+        {
+            transform.Translate(direction * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
     }
 
     //@INPUT: Gather the stick coordinates
     private void OnMove(InputValue movementValue)
     {
         leftStickPosition = movementValue.Get<Vector2>();
+
     }
 
     //@INPUT: Handle transform rotation
