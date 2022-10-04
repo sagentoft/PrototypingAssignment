@@ -30,8 +30,9 @@ public class PlayerMovementController : MonoBehaviour
 
     [HideInInspector]
     public bool isInputEnabled;
+    public bool controllerConnected;
     private bool isDecelerating = false;
-    public bool controllerConnected = false;
+    
 
 
     //@INIT
@@ -49,7 +50,7 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetJoystickNames().Length >= 0)
         {
             controllerConnected = false;
-            LookAtMouse();
+            //LookAtMouse();
         }
 
 
