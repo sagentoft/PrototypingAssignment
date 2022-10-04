@@ -21,6 +21,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private CharacterController controller;
     private Transform playerBody;
+    public CameraShake cameraShake;
 
     private Vector3 movementVector;
     private Vector3 lastMaxMovementVector;
@@ -34,6 +35,10 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField] private int dashSpeed;
     [SerializeField] private float dashTime;
+
+    public float dashCooldown;
+    private bool canDash = true;
+    public Gamepad gamepad;
 
 
     //@INIT
@@ -104,10 +109,7 @@ public class PlayerMovementController : MonoBehaviour
         //All the previous code only serves to calculate the movementVector, and we apply the movement to the controller at the very end of the Update
         controller.Move(movementVector * dt);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(DashCoroutine(movementVector));
-        }
+
     }
 
     private IEnumerator DashCoroutine(Vector3 direction)
@@ -120,6 +122,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 
     }
+
+    private IEnumerator CooldownCoroutine()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
 
     //@INPUT: Gather the stick coordinates
     private void OnMove(InputValue movementValue)
@@ -139,4 +149,19 @@ public class PlayerMovementController : MonoBehaviour
             playerBody.rotation = Quaternion.Euler(0, angle - 90, 0);
         }
     }
+
+    private void OnDash()
+    {
+
+        if (canDash)
+        {
+            StartCoroutine(DashCoroutine(movementVector));
+            gamepad.SendImpulse(1f, 1f);
+            StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
+            StartCoroutine(CooldownCoroutine());
+        }
+    
+    }
+
+
 }
