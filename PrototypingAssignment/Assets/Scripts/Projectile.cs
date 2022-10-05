@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody projectileBody;
     [SerializeField] private GameObject damageImdicatorPrefab;
+    [SerializeField] private GameObject gunBarrel;
     private bool isActive;
 
     public void Initialize(Vector3 direction)
@@ -29,6 +30,7 @@ public class Projectile : MonoBehaviour
 
             // Use either the following line (movement with the rigid body)
             projectileBody.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+            
 
             // or this one (movement with the transform), both are ok
             //transform.Translate(transform.forward * speed * Time.deltaTime);
@@ -37,7 +39,9 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
         GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
         damageIndicator.transform.position = collision.GetContact(0).point;
+        Destroy(this.gameObject);
     }
 }
