@@ -15,8 +15,8 @@ public class Projectile : MonoBehaviour
 
         // -------- This method is for projectiles that have a parabole. ----------
         // We add a force only once, not every frame, as it is not needed in this case.
-        // Make sure to have "useGravity" toggled on in the rigid body, this is bcz 
-        projectileBody.AddForce(direction);
+        // Make sure to have "useGravity" toggled on in the rigid body, this is bcz of the different option in Gravity.
+        //projectileBody.AddForce(direction);
     }
 
     void Update()
@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
             // Make sure to have "useGravity" toggled off in the rigid body, otherwise it will fall as it flies (unless thats what you want)
 
             // Use either the following line (movement with the rigid body)
-            //projectileBody.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+            projectileBody.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
 
             // or this one (movement with the transform), both are ok
             //transform.Translate(transform.forward * speed * Time.deltaTime);

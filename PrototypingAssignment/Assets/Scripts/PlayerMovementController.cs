@@ -14,6 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     public AnimationCurve decelerationCurve;
     public float accelerationDuration;
     public float decelerationDuration;
+    public bool controllerConnected;
 
     private float targetSpeed;
     private float speedChangeTimer = 0;
@@ -30,7 +31,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [HideInInspector]
     public bool isInputEnabled;
-    public bool controllerConnected;
+    
     private bool isDecelerating = false;
     
 

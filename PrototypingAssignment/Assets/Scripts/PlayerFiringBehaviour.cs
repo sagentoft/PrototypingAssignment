@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerRaycast : MonoBehaviour
+public class PlayerFiringBehaviour : MonoBehaviour
 {
     //[SerializeField] private LineRenderer lineRenderer;
-
+    //public InputAction fireAction; Is an uneccesarry part of the "InputEditor. Since it's actually separate to InputSystem, despite being the reference in Manual.
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.X))
