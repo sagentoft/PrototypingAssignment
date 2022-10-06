@@ -309,12 +309,12 @@ GameObject:
   - component: {fileID: 300650818781389491}
   - component: {fileID: 477939538543189227}
   m_Layer: 0
-  m_Name: Player
+  m_Name: LeoPlayer 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8268928662058723536
 Transform:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: b8b90928cb4a6e4498306ba5bd12c215, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 7f684513cb7bade4894cdde5181607c2, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -443,7 +443,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   accelerationDuration: 0.5
   decelerationDuration: 0.25
+  cameraShake: {fileID: 0}
   isInputEnabled: 0
+  dashSpeed: 30
+  dashTime: 0.2
+  dashCooldown: 1
 --- !u!114 &300650818781389491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ad7fa1bc01c8a49884ceef0d484335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: -160
+  HP: {fileID: 0}
+  health: 40
   maxHealth: 40
 --- !u!65 &477939538543189227
 BoxCollider:
