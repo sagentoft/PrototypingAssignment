@@ -174,7 +174,7 @@ public class PlayerMovementController : MonoBehaviour
         if (canDash)
         {
             StartCoroutine(DashCoroutine(movementVector));
-            StartCoroutine(cameraShake.Shake(0.1f, 0.1f));
+            //StartCoroutine(cameraShake.Shake(0.1f, 0.1f));
             StartCoroutine(CooldownCoroutine());
         }
         else

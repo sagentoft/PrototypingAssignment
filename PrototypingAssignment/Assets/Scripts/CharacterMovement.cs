@@ -21,6 +21,8 @@ public class CharacterMovement : MonoBehaviour
 
     private CharacterController controller;
     private Transform playerBody;
+    public CameraShake cameraShake;
+    private MeshRenderer playerRenderer;
 
     private Vector3 movementVector;
     private Vector3 lastMaxMovementVector;
@@ -32,6 +34,12 @@ public class CharacterMovement : MonoBehaviour
     public bool isInputEnabled;
     private bool isDecelerating = false;
 
+    [SerializeField] private int dashSpeed;
+    [SerializeField] private float dashTime;
+
+    public float dashCooldown;
+    private bool canDash = true;
+    private Color startColor;
 
     //@INIT
     void Start()
@@ -40,6 +48,8 @@ public class CharacterMovement : MonoBehaviour
         playerBody = transform.GetChild(0);
         movementVector = Vector3.zero;
         targetSpeed = maximumSpeed;
+        playerRenderer = playerBody.GetComponent<MeshRenderer>();
+        startColor = playerRenderer.material.color;
     }
 
     void Update()
@@ -99,6 +109,39 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(movementVector * dt);
     }
 
+    private IEnumerator DashCoroutine(Vector3 direction)
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + dashTime)
+        {
+            transform.Translate(direction * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator DashReady()
+    {
+        playerRenderer.material.color = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
+    private IEnumerator DashNotReady()
+    {
+        playerRenderer.material.color = Color.gray;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
+    private IEnumerator CooldownCoroutine()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+        StartCoroutine(DashReady());
+    }
+
     //@INPUT: Gather the stick coordinates
     private void OnMove(InputValue movementValue)
     {
@@ -115,5 +158,21 @@ public class CharacterMovement : MonoBehaviour
             float angle = Mathf.Atan2(rightStickPosition.x, rightStickPosition.y) * Mathf.Rad2Deg;
             playerBody.rotation = Quaternion.Euler(0, angle, 0);
         }
+    }
+
+    private void OnDash()
+    {
+
+        if (canDash)
+        {
+            StartCoroutine(DashCoroutine(movementVector));
+            //StartCoroutine(cameraShake.Shake(0.1f, 0.1f));
+            StartCoroutine(CooldownCoroutine());
+        }
+        else
+        {
+            StartCoroutine(DashNotReady());
+        }
+
     }
 }

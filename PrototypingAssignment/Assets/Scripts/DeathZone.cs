@@ -7,6 +7,6 @@ public class DeathZone : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("DashLevel");
     }
 }
