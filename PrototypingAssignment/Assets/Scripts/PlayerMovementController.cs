@@ -22,6 +22,7 @@ public class PlayerMovementController : MonoBehaviour
     private CharacterController controller;
     private Transform playerBody;
     public CameraShake cameraShake;
+    private MeshRenderer playerRenderer;
 
     private Vector3 movementVector;
     private Vector3 lastMaxMovementVector;
@@ -38,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public float dashCooldown;
     private bool canDash = true;
-    public Gamepad gamepad;
+    private Color startColor;
 
 
     //@INIT
@@ -48,6 +49,8 @@ public class PlayerMovementController : MonoBehaviour
         playerBody = transform.GetChild(0);
         movementVector = Vector3.zero;
         targetSpeed = maximumSpeed;
+        playerRenderer = playerBody.GetComponent<MeshRenderer>();
+        startColor = playerRenderer.material.color;
     }
 
     void Update()
@@ -123,11 +126,26 @@ public class PlayerMovementController : MonoBehaviour
 
     }
 
+    private IEnumerator DashReady()
+    {
+        playerRenderer.material.color = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
+    private IEnumerator DashNotReady()
+    {
+        playerRenderer.material.color = Color.gray;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
     private IEnumerator CooldownCoroutine()
     {
         canDash = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+        StartCoroutine(DashReady());
     }
 
 
@@ -156,9 +174,12 @@ public class PlayerMovementController : MonoBehaviour
         if (canDash)
         {
             StartCoroutine(DashCoroutine(movementVector));
-            gamepad.SendImpulse(1f, 1f);
-            StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
+            StartCoroutine(cameraShake.Shake(0.1f, 0.1f));
             StartCoroutine(CooldownCoroutine());
+        }
+        else
+        {
+            StartCoroutine(DashNotReady());
         }
     
     }
