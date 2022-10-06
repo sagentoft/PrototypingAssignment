@@ -25,6 +25,8 @@ public class CameraBehaviour : MonoBehaviour
 
     private Camera cam;
 
+    public CameraShake cameraShake;
+
     private Vector3 initialCameraOffset;
 
 
@@ -34,6 +36,7 @@ public class CameraBehaviour : MonoBehaviour
         cam = GetComponent<Camera>();
         initialCameraOffset = transform.position - player.transform.position;
     }
+
 
     // Update is called once per frame
     void LateUpdate()
@@ -55,6 +58,7 @@ public class CameraBehaviour : MonoBehaviour
             default:
                 break;
         }
+
     }
 
     private void UpdateOnGameplay()
@@ -88,6 +92,7 @@ public class CameraBehaviour : MonoBehaviour
             adjustedDamping *= dampingScreenEdgeDistance.Evaluate(1 - ((1-playerRelativeScreenPosition.y) / screenEdgeForFollow.y));
             transform.position += Vector3.forward * Time.deltaTime * adjustedDamping;
         }
+
     }
 
     private void UpdateOnScriptedCinematic()
@@ -99,4 +104,6 @@ public class CameraBehaviour : MonoBehaviour
     {
 
     }
+
+  
 }
