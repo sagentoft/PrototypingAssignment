@@ -39,9 +39,12 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
-        damageIndicator.transform.position = collision.GetContact(0).point;
-        Destroy(this.gameObject);
+        if (collision.gameObject.tag == "Player")
+            return;
+        else
+            Destroy(this.gameObject);
+        //GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
+        //damageIndicator.transform.position = collision.GetContact(0).point;
+        
     }
 }

@@ -113,7 +113,7 @@ public class CharacterMovement : MonoBehaviour
         if (rightStickPosition != Vector2.zero)
         {
             float angle = Mathf.Atan2(rightStickPosition.x, rightStickPosition.y) * Mathf.Rad2Deg;
-            playerBody.rotation = Quaternion.Euler(0, angle - 90, 0);
+            playerBody.rotation = Quaternion.Euler(0, angle, 0);
         }
     }
 }
