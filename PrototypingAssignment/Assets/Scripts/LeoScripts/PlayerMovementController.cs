@@ -14,7 +14,6 @@ public class PlayerMovementController : MonoBehaviour
     public AnimationCurve decelerationCurve;
     public float accelerationDuration;
     public float decelerationDuration;
-    public bool controllerConnected;
 
     private float targetSpeed;
     private float speedChangeTimer = 0;
@@ -22,6 +21,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private CharacterController controller;
     private Transform playerBody;
+    public CameraShake cameraShake;
+    private MeshRenderer playerRenderer;
 
     private Vector3 movementVector;
     private Vector3 lastMaxMovementVector;
@@ -31,9 +32,14 @@ public class PlayerMovementController : MonoBehaviour
 
     [HideInInspector]
     public bool isInputEnabled;
-    
     private bool isDecelerating = false;
-    
+
+    [SerializeField] private int dashSpeed;
+    [SerializeField] private float dashTime;
+
+    public float dashCooldown;
+    private bool canDash = true;
+    private Color startColor;
 
 
     //@INIT
@@ -43,22 +49,19 @@ public class PlayerMovementController : MonoBehaviour
         playerBody = transform.GetChild(0);
         movementVector = Vector3.zero;
         targetSpeed = maximumSpeed;
+        playerRenderer = playerBody.GetComponent<MeshRenderer>();
+        startColor = playerRenderer.material.color;
     }
 
     void Update()
     {
-        //Checks if a controller is connected.
-        if (Input.GetJoystickNames().Length >= 0)
-        {
-            controllerConnected = false;
-            //LookAtMouse();
-        }
-
-
         float dt = Time.deltaTime; //It's used quite a lot in this function so I am storing it locally for a light optimization
 
         controller.Move(new Vector3(0, -gravityValue * dt, 0)); //gravity: the character constantly moves downwards, the CharacterController component handles collision
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            controller.Move(new Vector3(0, -gravityValue * dt, 0) * 100);
+        }
         float progression = 0;
 
         //What happens when the stick is pressed in a direction
@@ -108,30 +111,78 @@ public class PlayerMovementController : MonoBehaviour
 
         //All the previous code only serves to calculate the movementVector, and we apply the movement to the controller at the very end of the Update
         controller.Move(movementVector * dt);
+
+
     }
+
+    private IEnumerator DashCoroutine(Vector3 direction)
+    {
+        float startTime = Time.time;
+        while(Time.time < startTime + dashTime)
+        {
+            transform.Translate(direction * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator DashReady()
+    {
+        playerRenderer.material.color = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
+    private IEnumerator DashNotReady()
+    {
+        playerRenderer.material.color = Color.gray;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
+    }
+
+    private IEnumerator CooldownCoroutine()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+        StartCoroutine(DashReady());
+    }
+
 
     //@INPUT: Gather the stick coordinates
     private void OnMove(InputValue movementValue)
     {
         leftStickPosition = movementValue.Get<Vector2>();
+
     }
 
     //@INPUT: Handle transform rotation
     private void OnLook(InputValue lookValue)
     {
-
         rightStickPosition = lookValue.Get<Vector2>();
 
-        if (rightStickPosition != Vector2.zero)
+        if(rightStickPosition != Vector2.zero)
         {
             float angle = Mathf.Atan2(rightStickPosition.x, rightStickPosition.y) * Mathf.Rad2Deg;
-            playerBody.rotation = Quaternion.Euler(0, angle, 0);
+            playerBody.rotation = Quaternion.Euler(0, angle - 90, 0);
         }
     }
-    private void LookAtMouse()
+
+    private void OnDash()
     {
 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.forward = mousePos - new Vector2(transform.position.x, transform.position.y);
+        if (canDash)
+        {
+            StartCoroutine(DashCoroutine(movementVector));
+            StartCoroutine(cameraShake.Shake(0.1f, 0.1f));
+            StartCoroutine(CooldownCoroutine());
+        }
+        else
+        {
+            StartCoroutine(DashNotReady());
+        }
+    
     }
+
+
 }
