@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,8 +21,11 @@ public class EnemyMovement : MonoBehaviour
     public float attackSpeed;
     public bool alreadyAttacked;
     //AttackingVariablesHere
-    
-    //
+
+    public Transform shootFromHere;
+    public GameObject projectile;
+    public int health;
+    public int damage;
 
     //states
     public float sightRange, attackRange;
@@ -69,9 +73,17 @@ public class EnemyMovement : MonoBehaviour
     }
     private void Attacking()
     {
-        //Enemies dont get to move and attack at the same time
-        agent.SetDestination(transform.position);
+        if (!alreadyAttacked)
+        {
+            Rigidbody rb = Instantiate(projectile, shootFromHere.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
 
+
+            alreadyAttacked = true;
+            Invoke(nameof(resetAttack), attackSpeed);
+        }
+        agent.SetDestination(transform.position);
+        
 
     }
     private void ChasingPlayer()
@@ -79,19 +91,30 @@ public class EnemyMovement : MonoBehaviour
         agent.SetDestination(player.position);
 
         transform.LookAt(player);
-        if (!alreadyAttacked)
-        {
-            //PutAttacking stuff Here!!
-
-            //---------------
-            alreadyAttacked = true;
-            Invoke(nameof(resetAttack), attackSpeed);
-        }
 
     }
 
     private void resetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    /*public void TakeDamage(int damage)
+    {
+
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(this);
+        }
+    }*/
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+
     }
 }
