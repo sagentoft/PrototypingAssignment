@@ -352,9 +352,9 @@ GameObject:
   - component: {fileID: 8268928662058723536}
   - component: {fileID: 8268928662058723551}
   - component: {fileID: 8268928662058723550}
-  - component: {fileID: 8268928662058723537}
   - component: {fileID: 477939538543189227}
   - component: {fileID: 1260450565}
+  - component: {fileID: 1271836722969548414}
   m_Layer: 7
   m_Name: LeoPlayer 1
   m_TagString: Player
@@ -426,71 +426,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8268928662058723537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8268928662058723541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c3928f5e7bad941b55a2af5f9a1f3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumSpeed: 10
-  gravityValue: 8
-  accelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  decelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  accelerationDuration: 0.5
-  decelerationDuration: 0.25
-  isInputEnabled: 0
 --- !u!65 &477939538543189227
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -519,6 +454,39 @@ MonoBehaviour:
   HP: {fileID: 0}
   health: 40
   maxHealth: 40
+--- !u!114 &1271836722969548414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268928662058723541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b2bba174913244eb68c393806b5cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumSpeed: 0
+  gravityValue: 0
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  decelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  accelerationDuration: 0
+  decelerationDuration: 0
+  cameraShake: {fileID: 0}
+  isInputEnabled: 0
+  dashSpeed: 0
+  dashTime: 0
+  dashCooldown: 0
 --- !u!1 &8268928663054353746
 GameObject:
   m_ObjectHideFlags: 0
