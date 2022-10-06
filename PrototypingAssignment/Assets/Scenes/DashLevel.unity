@@ -1946,6 +1946,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeoPlayer 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8268928662058723550, guid: 464938cf1c09403439455d487e3c467e, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464938cf1c09403439455d487e3c467e, type: 3}
 --- !u!1 &1103187115
