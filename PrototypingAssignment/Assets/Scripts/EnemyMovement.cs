@@ -99,15 +99,15 @@ public class EnemyMovement : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    /*public void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-
+        Debug.LogError("hit");
         health -= damage;
         if (health <= 0)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
-    }*/
+    }
 
     private void OnDrawGizmosSelected()
     {

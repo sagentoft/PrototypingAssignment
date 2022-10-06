@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 817925850667100351}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 817925850667100351}
-  player: {fileID: 8268928662058723536, guid: 464938cf1c09403439455d487e3c467e, type: 3}
+  player: {fileID: 2440575814026618680, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
   terrain:
     serializedVersion: 2
     m_Bits: 64

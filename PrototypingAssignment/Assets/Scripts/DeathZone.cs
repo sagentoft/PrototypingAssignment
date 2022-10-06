@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class DeathZone : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        SceneManager.LoadScene("DashLevel");
+        if (collision.gameObject.tag == ("Player"))
+        {
+            SceneManager.LoadScene("DashLevel");
+        }
     }
 }

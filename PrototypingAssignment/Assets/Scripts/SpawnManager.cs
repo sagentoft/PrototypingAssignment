@@ -6,7 +6,7 @@ using UnityEngine.PlayerLoop;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4;
+    [SerializeField] private Transform spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4, spawnPoint5, spawnPoint6;
     [SerializeField] private GameObject Enemy;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private int enemyCount;
@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
         if (enemyCount < allowedEnemyCount && canSpawnEnemies)
         {
             SpawningStuff(1);
-            enemyCount += 4;
+            enemyCount += 6;
 
         }
     }
@@ -33,9 +33,11 @@ public class SpawnManager : MonoBehaviour
                 Instantiate(Enemy, spawnPoint2.position, transform.rotation);
                 Instantiate(Enemy, spawnPoint3.position, transform.rotation);
                 Instantiate(Enemy, spawnPoint4.position, transform.rotation);
+                Instantiate(Enemy, spawnPoint5.position, transform.rotation);
+                Instantiate(Enemy, spawnPoint6.position, transform.rotation);
                 canSpawnEnemies = false;
             }            
-            StartCoroutine(Cooldown());;
+            StartCoroutine(Cooldown());
         }
     }
 
