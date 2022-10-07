@@ -1662,9 +1662,7 @@ MonoBehaviour:
   spawnPoint5: {fileID: 1933922288}
   spawnPoint6: {fileID: 1410430722}
   Enemy: {fileID: 817925850667100344, guid: a7e2493048b8a854ab290053bf03079d, type: 3}
-  timeBetweenSpawns: 5
-  enemyCount: 0
-  allowedEnemyCount: 40
+  timeBetweenSpawns: 7
   canSpawnEnemies: 1
 --- !u!1 &683851567
 GameObject:

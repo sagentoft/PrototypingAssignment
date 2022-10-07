@@ -9,9 +9,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private TextMeshProUGUI HP;
     [Range(0, 40)] public int health;
     public int maxHealth = 40;
+    private Transform playerBody;
+    private MeshRenderer playerRenderer;
+    private Color startColor;
 
     public void Start()
     {
+        playerBody = transform.GetChild(0);
+        playerRenderer = playerBody.GetComponent<MeshRenderer>();
+        startColor = playerRenderer.material.color;
         health = maxHealth;
         //Debug.Log(health);
     }
@@ -27,12 +33,19 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
-        //Debug.Log(amount);
-        Debug.Log(health);
+        StartCoroutine(DamageFlash());
+
         if (health <= 0)
         {            
             SceneManager.LoadScene("DashLevel");         
         }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        playerRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        playerRenderer.material.color = startColor;
     }
 
 }
