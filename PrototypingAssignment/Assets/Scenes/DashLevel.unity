@@ -9908,7 +9908,7 @@ PrefabInstance:
       objectReference: {fileID: 280083343}
     - target: {fileID: 2440575814026618685, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
       propertyPath: dashSpeed
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2440575814026618685, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
       propertyPath: cameraShake
