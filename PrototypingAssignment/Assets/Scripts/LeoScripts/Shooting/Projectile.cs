@@ -15,10 +15,10 @@ public class Projectile : MonoBehaviour
     {
         isActive = true;
 
-        // -------- This method is for projectiles that have a parabole. ----------
-        // We add a force only once, not every frame, as it is not needed in this case.
-        // Make sure to have "useGravity" toggled on in the rigid body, this is bcz of the different option in Gravity.
-        //projectileBody.AddForce(direction);
+        /* -------- This method is for projectiles that have a parabole. ----------
+         We add a force only once, not every frame, as it is not needed in this case.
+         Make sure to have "useGravity" toggled on in the rigid body, this is bcz of the different option in Gravity.
+        */projectileBody.AddForce(direction);
     }
 
     void Update()
@@ -33,8 +33,9 @@ public class Projectile : MonoBehaviour
             projectileBody.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
             
 
-            // or this one (movement with the transform), both are ok
-            //transform.Translate(transform.forward * speed * Time.deltaTime);
+            /* or this one (movement with the transform), both are ok. Which doesn't work with collision and movement we expect of the bullets /Leo
+            transform.Translate(transform.forward * speed * Time.deltaTime);
+            */
         }
     }
 
@@ -45,10 +46,14 @@ public class Projectile : MonoBehaviour
             collision.gameObject.GetComponent<EnemyMovement>().TakeDamage(10);
             Destroy(gameObject);
         }
-     
-        //Superflous since it only needs to be destroyed on enemy contact.
-        //Destroy(gameObject);
-        
+
+        //Superflous since it only "needs" to be destroyed on enemy contact. This however isn't also ignores all other terrain, creating infinite bullets. /Leo
+        //if (collision.gameObject.tag == "Player")
+        //{
+        //    //Destroy(gameObject);
+        //}
+
+        //Code for creating an object marking the impact point for the collision. /Leo
         //GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
         //damageIndicator.transform.position = collision.GetContact(0).point;
     }
