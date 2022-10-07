@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e64cdc3698864d4c94d7e6de13868d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 80
+  speed: 100
   projectileBody: {fileID: 6051167793054268838}
   damageImdicatorPrefab: {fileID: 4432446086932321774, guid: 358aabfbd34f4fb4ba5aee5d9f5a7617, type: 3}
   gunBarrel: {fileID: 0}

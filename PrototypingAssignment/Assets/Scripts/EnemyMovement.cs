@@ -12,6 +12,8 @@ public class EnemyMovement : MonoBehaviour
 
     public LayerMask terrain, isPlayer;
 
+    public int killCount;
+
     //RandomlyMoving
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -101,10 +103,11 @@ public class EnemyMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.LogError("hit");
+        //Debug.LogError("hit");
         health -= damage;
         if (health <= 0)
         {
+            GameplayController.instance.EnemyKilled();
             Destroy(gameObject);
         }
     }

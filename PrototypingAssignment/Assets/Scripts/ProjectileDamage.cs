@@ -21,7 +21,7 @@ public class ProjectileDamage : MonoBehaviour
     {
         if (collision.gameObject.tag == ("Player"))
         {
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(10);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(5);
         }
 
         Destroy(gameObject);
