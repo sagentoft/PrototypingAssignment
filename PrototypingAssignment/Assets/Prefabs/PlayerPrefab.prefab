@@ -241,6 +241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6051167793054268832, guid: c983b9568773de54caccf7aef1725b19, type: 3}
   shootingStartPosition: {fileID: 1258152304277567668}
+  _ammoCount: 5
+  emptyClipSound: {fileID: 8300000, guid: 4affaefcde6f90e498cd194407961dc4, type: 3}
+  firingSound: {fileID: 8300000, guid: 2c60de979349fbb40acba2249ebd102f, type: 3}
 --- !u!1 &8268928661879357095
 GameObject:
   m_ObjectHideFlags: 0

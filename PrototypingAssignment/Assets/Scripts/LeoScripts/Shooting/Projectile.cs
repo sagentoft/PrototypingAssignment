@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody projectileBody;
     [SerializeField] private GameObject damageImdicatorPrefab;
     [SerializeField] private GameObject gunBarrel;
-    public EnemyMovement enemyMovement;
+
     private bool isActive;
 
     public void Initialize(Vector3 direction)
@@ -40,17 +40,12 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.LogError("Hit2");
-        if (collision.gameObject.tag == ("Enemy"))
-        {
-            collision.gameObject.GetComponent<EnemyMovement>().TakeDamage(10);
-        }
-
-        Destroy(gameObject);
-
+        if (collision.gameObject.tag == "Player")
+            Debug.Log("Go on Bullet");
+        else
+            Destroy(this.gameObject);
+        
         //GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
         //damageIndicator.transform.position = collision.GetContact(0).point;
-
     }
-
 }
