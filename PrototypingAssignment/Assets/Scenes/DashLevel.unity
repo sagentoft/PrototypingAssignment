@@ -9910,5 +9910,13 @@ PrefabInstance:
       propertyPath: cameraShake
       value: 
       objectReference: {fileID: 454932262}
+    - target: {fileID: 6451209209589363367, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
+      propertyPath: firingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c60de979349fbb40acba2249ebd102f, type: 3}
+    - target: {fileID: 6451209209589363367, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
+      propertyPath: emptyClipSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4affaefcde6f90e498cd194407961dc4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6036efed16e49c842af2b33c09429ffa, type: 3}
