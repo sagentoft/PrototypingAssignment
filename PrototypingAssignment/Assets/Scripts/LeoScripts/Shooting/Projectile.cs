@@ -46,7 +46,8 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
      
-        Destroy(gameObject);
+        //Superflous since it only needs to be destroyed on enemy contact.
+        //Destroy(gameObject);
         
         //GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
         //damageIndicator.transform.position = collision.GetContact(0).point;
