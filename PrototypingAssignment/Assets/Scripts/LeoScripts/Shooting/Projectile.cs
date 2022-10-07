@@ -40,10 +40,13 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
-            Debug.Log("Go on Bullet");
-        else
-            Destroy(this.gameObject);
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<EnemyMovement>().TakeDamage(10);
+            Destroy(gameObject);
+        }
+     
+        Destroy(gameObject);
         
         //GameObject damageIndicator = Instantiate(damageImdicatorPrefab);
         //damageIndicator.transform.position = collision.GetContact(0).point;
